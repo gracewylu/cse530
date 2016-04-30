@@ -1,6 +1,7 @@
 #cse530
 
 This project uses Django to scrape the data from html documents from https://courses.wustl.edu/Semester/Listing.aspx and http://bulletin.wustl.edu/ to display sample four-year schedules for students who are looking to double-major.
+
 ==================
 Frontend 
 ==================

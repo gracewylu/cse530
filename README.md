@@ -13,4 +13,4 @@ Bootstrap v3.3.6
 ==================
 Backend
 ==================
-Using Django for backend and for scripts 
+Using Django for backend and for scripts as well as SQLite for database

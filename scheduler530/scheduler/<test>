@@ -1,0 +1,37 @@
+0000000000401129 <test>:
+  401129:       55                      push   %rbp
+  40112a:       48 89 e5                mov    %rsp,%rbp
+  40112d:       48 83 ec 10             sub    $0x10,%rsp
+  401131:       b8 00 00 00 00          mov    $0x0,%eax
+  401136:       e8 86 04 00 00          callq  4015c1 <uniqueval>
+  40113b:       89 45 f8                mov    %eax,-0x8(%rbp)
+  40113e:       b8 00 00 00 00          mov    $0x0,%eax
+  401143:       e8 d4 06 00 00          callq  40181c <getbuf>
+  401148:       89 45 fc                mov    %eax,-0x4(%rbp)
+  40114b:       b8 00 00 00 00          mov    $0x0,%eax
+  401150:       e8 6c 04 00 00          callq  4015c1 <uniqueval>
+  401155:       8b 55 f8                mov    -0x8(%rbp),%edx
+  401158:       39 d0                   cmp    %edx,%eax
+  40115a:       74 0c                   je     401168 <test+0x3f>
+  40115c:       bf 38 2a 40 00          mov    $0x402a38,%edi
+  401161:       e8 da fb ff ff          callq  400d40 <puts@plt>
+  401166:       eb 41                   jmp    4011a9 <test+0x80>
+  401168:       8b 55 fc                mov    -0x4(%rbp),%edx
+  40116b:       8b 05 67 50 20 00       mov    0x205067(%rip),%eax        # 6061d8 <cookie>
+  401171:       39 c2                   cmp    %eax,%edx
+  401173:       75 20                   jne    401195 <test+0x6c>
+  401175:       8b 45 fc                mov    -0x4(%rbp),%eax
+  401178:       89 c6                   mov    %eax,%esi
+  40117a:       bf 61 2a 40 00          mov    $0x402a61,%edi
+  40117f:       b8 00 00 00 00          mov    $0x0,%eax
+  401184:       e8 17 fc ff ff          callq  400da0 <printf@plt>
+  401189:       bf 03 00 00 00          mov    $0x3,%edi
+  40118e:       e8 05 08 00 00          callq  401998 <validate>
+  401193:       eb 14                   jmp    4011a9 <test+0x80>
+  401195:       8b 45 fc                mov    -0x4(%rbp),%eax
+  401198:       89 c6                   mov    %eax,%esi
+  40119a:       bf 7e 2a 40 00          mov    $0x402a7e,%edi
+  40119f:       b8 00 00 00 00          mov    $0x0,%eax
+  4011a4:       e8 f7 fb ff ff          callq  400da0 <printf@plt>
+  4011a9:       c9                      leaveq 
+  4011aa:       c3                      retq  

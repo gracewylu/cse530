@@ -1,0 +1,60 @@
+0000000000401050 <smoke>:
+  401050:       55                      push   %rbp
+  401051:       48 89 e5                mov    %rsp,%rbp
+  401054:       bf 90 29 40 00          mov    $0x402990,%edi
+  401059:       e8 e2 fc ff ff          callq  400d40 <puts@plt>
+  40105e:       bf 00 00 00 00          mov    $0x0,%edi
+  401063:       e8 30 09 00 00          callq  401998 <validate>
+  401068:       bf 00 00 00 00          mov    $0x0,%edi
+  40106d:       e8 8e fe ff ff          callq  400f00 <exit@plt>
+
+0000000000401072 <fizz>:
+  401072:       55                      push   %rbp
+  401073:       48 89 e5                mov    %rsp,%rbp
+  401076:       48 83 ec 10             sub    $0x10,%rsp
+  40107a:       89 7d fc                mov    %edi,-0x4(%rbp)
+  40107d:       8b 55 fc                mov    -0x4(%rbp),%edx
+  401080:       8b 05 52 51 20 00       mov    0x205152(%rip),%eax        # 6061d8 <cookie>
+  401086:       39 c2                   cmp    %eax,%edx
+  401088:       75 20                   jne    4010aa <fizz+0x38>
+  40108a:       8b 45 fc                mov    -0x4(%rbp),%eax
+  40108d:       89 c6                   mov    %eax,%esi
+  40108f:       bf ab 29 40 00          mov    $0x4029ab,%edi
+  401094:       b8 00 00 00 00          mov    $0x0,%eax
+  401099:       e8 02 fd ff ff          callq  400da0 <printf@plt>
+  40109e:       bf 01 00 00 00          mov    $0x1,%edi
+  4010a3:       e8 f0 08 00 00          callq  401998 <validate>
+  4010a8:       eb 14                   jmp    4010be <fizz+0x4c>
+  4010aa:       8b 45 fc                mov    -0x4(%rbp),%eax
+  4010ad:       89 c6                   mov    %eax,%esi
+  4010af:       bf d0 29 40 00          mov    $0x4029d0,%edi
+  4010b4:       b8 00 00 00 00          mov    $0x0,%eax
+  4010b9:       e8 e2 fc ff ff          callq  400da0 <printf@plt>
+  4010be:       bf 00 00 00 00          mov    $0x0,%edi
+  4010c3:       e8 38 fe ff ff          callq  400f00 <exit@plt>
+
+00000000004010c8 <bang>:
+  4010c8:       55                      push   %rbp
+  4010c9:       48 89 e5                mov    %rsp,%rbp
+  4010cc:       48 83 ec 10             sub    $0x10,%rsp
+  4010d0:       89 7d fc                mov    %edi,-0x4(%rbp)
+  4010d3:       8b 05 07 51 20 00       mov    0x205107(%rip),%eax        # 6061e0 <global_value>
+  4010d9:       89 c2                   mov    %eax,%edx
+  4010db:       8b 05 f7 50 20 00       mov    0x2050f7(%rip),%eax        # 6061d8 <cookie>
+  4010e1:       39 c2                   cmp    %eax,%edx
+  4010e3:       75 23                   jne    401108 <bang+0x40>
+  4010e5:       8b 05 f5 50 20 00       mov    0x2050f5(%rip),%eax        # 6061e0 <global_value>
+  4010eb:       89 c6                   mov    %eax,%esi
+  4010ed:       bf f0 29 40 00          mov    $0x4029f0,%edi
+  4010f2:       b8 00 00 00 00          mov    $0x0,%eax
+  4010f7:       e8 a4 fc ff ff          callq  400da0 <printf@plt>
+  4010fc:       bf 02 00 00 00          mov    $0x2,%edi
+  401101:       e8 92 08 00 00          callq  401998 <validate>
+  401106:       eb 17                   jmp    40111f <bang+0x57>
+  401108:       8b 05 d2 50 20 00       mov    0x2050d2(%rip),%eax        # 6061e0 <global_value>
+  40110e:       89 c6                   mov    %eax,%esi
+  401110:       bf 15 2a 40 00          mov    $0x402a15,%edi
+  401115:       b8 00 00 00 00          mov    $0x0,%eax
+  40111a:       e8 81 fc ff ff          callq  400da0 <printf@plt>
+  40111f:       bf 00 00 00 00          mov    $0x0,%edi
+  401124:       e8 d7 fd ff ff          callq  400f00 <exit@plt>

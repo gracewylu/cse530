@@ -452,13 +452,13 @@ def convertToHTML(fys):
                 stringOfHTML += stringForClass
         for semester in newfourYearSchedule:
             if classes > len(semester):
-                stringOfHTML += "<td>Electives</td>"
+                stringOfHTML += "<td style=\"color:#f05f40;\">Elective</td>"
             else:
                 stringForClass = "<td>" + semester[classes-1].className + "</td>"
                 stringOfHTML += stringForClass
         if (semestersLeft > 0):
             for semester in range (0,semestersLeft):
-                stringOfHTML += "<td >Electives</td>"
+                stringOfHTML += "<td style=\"color:#f05f40;\">Elective</td>"
         stringOfHTML += "</tr>"
 
     return stringOfHTML

@@ -100,7 +100,9 @@ Things to do:
 
 	                <hr>
 	                <div class="col-md-offset-5">
-	                	<input type = "submit" value = "Plan my Schedule" class="form-control" style="width: 150px;">
+	                	<input type = "submit" value = "Plan my Schedule" class="form-control" style="width: 150px;" onClick="show()">
+	                	<br>
+	                	<input class="hidden" type = "submit" value = "View schedule" class="form-control" id="visible" style="width: 150px;" onClick="scroll()">
 					</div>
 
 
@@ -799,14 +801,14 @@ Things to do:
 					</tr>bgcolor=\"#e38c9a\"
 					bgcolor=\"#e6e6e6\"
 				</thead> -->
-				<tbody>
-					<tr>
+				<!-- <tbody>
+					<tr> -->
 						{% if schedule %}
 						<!-- {{schedule}} -->
 						{{schedule | safe}}
 						{% endif %}
-					</tr>
-				</tbody>
+					<!-- </tr>
+				</tbody> -->
 			  	
 
 		  	</table>
@@ -861,7 +863,17 @@ Things to do:
 			<br>
 				</form> -->
 	</div>
+	<script type="text/javascript">
+		function show(){
+			$("#visible").removeClass("hidden");
+		}
 
+		function scroll(){
+			$('html, body').animate({ scrollTop: $('#page1').offset().top }, 'slow');
+            return false;
+		}
+	</script>
+    
     <script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/jquery.easing.min.js" %}"></script>

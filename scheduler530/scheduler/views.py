@@ -429,25 +429,36 @@ def convertToHTML(fys):
     # print("This is the FYS")
     # print(fourYearSchedule)
 
-    stringOfHTML = ""
-    for classes in range(1,8):
+    stringOfHTML = """<thead>
+                    <tr>
+                        <th>Freshman Fall</th>
+                        <th>Freshman Spring</th>
+                        <th>Sophomore Fall</th>
+                        <th>Sophomore Spring</th>
+                        <th>Junior Fall</th>
+                        <th>Junior Spring</th>
+                        <th>Senior Fall</th>
+                        <th>Senior Spring</th>
+                    </tr>
+                </thead>"""
+    for classes in range(1,6):
         stringOfHTML += "<tr>"
         semestersLeft = 8 - len(oldFourYearSchedule) - len(newfourYearSchedule)
         for semester in oldFourYearSchedule:
             if classes > len(semester):
-                stringOfHTML += "<td bgcolor=\"#e38c9a\">--</td>"
+                stringOfHTML += "<td >--</td>"
             else:
-                stringForClass = "<td bgcolor=\"#e6e6e6\">" + semester[classes-1].className + "</td>"
+                stringForClass = "<td >" + semester[classes-1].className + "</td>"
                 stringOfHTML += stringForClass
         for semester in newfourYearSchedule:
             if classes > len(semester):
-                stringOfHTML += "<td bgcolor=\"#e38c9a\">FREE TIME</td>"
+                stringOfHTML += "<td>Electives</td>"
             else:
                 stringForClass = "<td>" + semester[classes-1].className + "</td>"
                 stringOfHTML += stringForClass
         if (semestersLeft > 0):
             for semester in range (0,semestersLeft):
-                stringOfHTML += "<td bgcolor=\"#e38c9a\">FREE TIME</td>"
+                stringOfHTML += "<td >Electives</td>"
         stringOfHTML += "</tr>"
 
     return stringOfHTML

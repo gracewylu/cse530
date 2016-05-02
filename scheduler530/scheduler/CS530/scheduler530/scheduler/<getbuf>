@@ -1,0 +1,10 @@
+000000000040181c <getbuf>:
+  40181c:       55                      push   %rbp
+  40181d:       48 89 e5                mov    %rsp,%rbp
+  401820:       48 83 ec 20             sub    $0x20,%rsp
+  401824:       48 8d 45 e0             lea    -0x20(%rbp),%rax
+  401828:       48 89 c7                mov    %rax,%rdi
+  40182b:       e8 ab fa ff ff          callq  4012db <Gets>
+  401830:       b8 01 00 00 00          mov    $0x1,%eax
+  401835:       c9                      leaveq 
+  401836:       c3                      retq   

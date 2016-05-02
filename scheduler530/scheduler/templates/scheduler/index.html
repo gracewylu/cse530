@@ -102,7 +102,9 @@ Things to do:
 	                <div class="col-md-offset-5">
 	                	<input type = "submit" value = "Plan my Schedule" class="form-control" style="width: 150px;" onClick="show()">
 	                	<br>
-	                	<input class="hidden" type = "submit" value = "View schedule" class="form-control" id="visible" style="width: 150px;" onClick="scroll()">
+	                	{% if schedule %}
+	                	<input type = "button" value = "View schedule" class="form-control" id="visible" style="width: 150px;" onClick="scroll()">
+	                	{% endif %}
 					</div>
 
 

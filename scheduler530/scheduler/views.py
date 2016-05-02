@@ -148,13 +148,18 @@ def getFourYearSchedule(oldSchedule, school, majorOne, majorTwo=None):
     listSch = [x.strip() for x in school.listOfClasses.split(',')]
     listMaj1 = [x.strip() for x in majorOne.listOfClasses.split(',')]
 
+    allMajorAttributes = majorOne.attributes
+    
     if majorTwo is not None:
         listMaj2 = [x.strip() for x in majorTwo.listOfClasses.split(',')]
         listAllClassID = list(set().union(listMaj1, listMaj2, listSch)) # might fuck up
+    # allMajorAttributes = allMajorAttributes + listMaj2.attributes
+    
 
     else:
         listAllClassID = list(set().union(listMaj1, listSch)) # might fuck up
 
+    allMajorAttributes = allMajorAttributes.split(',')
 
 
     # remove duplicates from based on old Schedule
@@ -242,6 +247,57 @@ def getFourYearSchedule(oldSchedule, school, majorOne, majorTwo=None):
 
         fys.switchSem()
 
+        #Check what school attribute requirements are fulfilled by classes
+    allClasses = fys.returnAllClasses()
+    allSchoolAttributes = school.attributes.split(',')
+    #print(allSchoolAttributes)
+    for singleClass in allClasses:
+        attributes = singleClass.attributes
+        if attributes is not None:
+        #or '-' not in singleClass.attributes:
+            classAttributes = singleClass.attributes.split(',')
+            for attribute in classAttributes:
+                if attribute in allSchoolAttributes:
+                    allSchoolAttributes.remove(attribute)
+
+    #allMajorAttributes defined above
+    #Only checking attributes from first major, ignoring attributes that are fulfilled by core classes
+    for singleClass in allClasses:
+        if singleClass.classID not in listMaj1:
+           if singleClass.attributes != '-':
+               if singleClass.attributes is not None:
+                   
+                   classAttributes = singleClass.attributes.split(',')
+                   for attribute in classAttributes:
+                       if attribute in allMajorAttributes:
+                            allMajorAttributes.remove(attribute)
+                                
+#Get attribute class object from DB and add to fys
+    neededAttributes = allSchoolAttributes #allMajorAttributes + allSchoolAttributes
+    helper = neededAttributes
+    for semester in fys.newClassesBySemester:
+        counter = -1
+        for attribute in neededAttributes:
+            counter = counter + 1
+            attribute = attribute.strip()
+            for i in range(1, 6-len(semester)):
+                if not '-' in attribute:
+                    if 0 < len(neededAttributes):
+                        semester.append(Class.objects.get(className = neededAttributes[counter].strip()))
+                        neededAttributes.pop(counter)
+                       
+
+    #counter = counter + 1
+
+
+    for attribute in neededAttributes:
+        if not '-' in attribute:
+            attribute = attribute.strip()
+            fys.addClass(Class.objects.get(className = attribute))
+
+
+
+
 
     return fys
 
@@ -323,7 +379,9 @@ class fourYearSchedule:
 
         classesToCheck = self.flatten(self.oldClassesBySemester).union(self.flatten(self.newClassesBySemester))
         return (classToTake in classesToCheck) # might give some bugs
-
+    
+    def returnAllClasses(self):
+        return list(self.flatten(self.oldClassesBySemester + self.newClassesBySemester))
 
 # def parseTranscript():
 #
@@ -426,39 +484,36 @@ def convertToHTML(fys):
 
     oldFourYearSchedule = fys.oldClassesBySemester
     newfourYearSchedule = fys.newClassesBySemester # have to add oldSemesters
-    # print("This is the FYS")
+    newfourYearSchedule.append(fys.currentSemester)
+    #print(fys.newClassesBySemester)
+    # print(fys.currentSemester)
     # print(fourYearSchedule)
-
-    stringOfHTML = """<thead>
-                    <tr>
-                        <th>Freshman Fall</th>
-                        <th>Freshman Spring</th>
-                        <th>Sophomore Fall</th>
-                        <th>Sophomore Spring</th>
-                        <th>Junior Fall</th>
-                        <th>Junior Spring</th>
-                        <th>Senior Fall</th>
-                        <th>Senior Spring</th>
-                    </tr>
-                </thead>"""
+  
+    stringOfHTML = ""
     for classes in range(1,6):
         stringOfHTML += "<tr>"
         semestersLeft = 8 - len(oldFourYearSchedule) - len(newfourYearSchedule)
         for semester in oldFourYearSchedule:
             if classes > len(semester):
-                stringOfHTML += "<td >--</td>"
+                stringOfHTML += "<td bgcolor=\"#e38c9a\">--</td>"
             else:
-                stringForClass = "<td >" + semester[classes-1].className + "</td>"
+                stringForClass = "<td bgcolor=\"#e6e6e6\">" + semester[classes-1].className + "</td>"
                 stringOfHTML += stringForClass
         for semester in newfourYearSchedule:
             if classes > len(semester):
-                stringOfHTML += "<td style=\"color:#f05f40;\">Elective</td>"
+                stringOfHTML += "<td bgcolor=\"#e38c9a\">Elective/Free Time</td>"
             else:
                 stringForClass = "<td>" + semester[classes-1].className + "</td>"
                 stringOfHTML += stringForClass
+        #for myClass in fys.currentSemester:
+        #  if classes > len(fys.currentSemester):
+        #      "<td bgcolor=\"#e38c9a\">Elective/Free Time</td>"
+                #  else:
+                #     stringForClass = "<td>" + myClass.className + "</td>"
+                #       stringOfHTML += stringForClass
         if (semestersLeft > 0):
             for semester in range (0,semestersLeft):
-                stringOfHTML += "<td style=\"color:#f05f40;\">Elective</td>"
+                stringOfHTML += "<td bgcolor=\"#e38c9a\">Elective/Free Time</td>"
         stringOfHTML += "</tr>"
 
     return stringOfHTML
